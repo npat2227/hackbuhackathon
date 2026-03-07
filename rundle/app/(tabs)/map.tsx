@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -28,31 +28,7 @@ const POINT_PAIRS = {
 
 export default function MapScreen() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [points] = useState(() => getRandomPoints());
-  const [POINT_A, POINT_B] = points;
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
   const insets = useSafeAreaInsets();
-  
-  useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
-
-        const currentLocation = await Location.getCurrentPositionAsync({});
-        setLocation(currentLocation);
-        console.log(currentLocation.coords.latitude, currentLocation.coords.longitude);
-      } catch (error) {
-        setErrorMsg('Error fetching location');
-        console.error(error);
-      }
-    })();
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -149,19 +125,5 @@ const styles = StyleSheet.create({
   closeButton: {
     color: '#007AFF',
     fontSize: 16,
-  },
-  errorBanner: {
-    position: 'absolute',
-    top: 100,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 0, 0, 0.7)',
-    padding: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  errorText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
 });
