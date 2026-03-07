@@ -20,19 +20,19 @@ const POINT_PAIRS = {
 export default function MapScreen() {
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: (POINT_A.latitude + POINT_B.latitude) / 2,
-          longitude: (POINT_A.longitude + POINT_B.longitude) / 2,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
-        }}>
-        <Marker coordinate={POINT_A} title="Point A" />
-        <Marker coordinate={POINT_B} title="Point B" />
-      </MapView>
-  <Timer />
-  </View>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: (POINT_A.latitude + POINT_B.latitude) / 2,
+            longitude: (POINT_A.longitude + POINT_B.longitude) / 2,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.02,
+          }}>
+          <Marker coordinate={POINT_A} title="Point A" />
+          <Marker coordinate={POINT_B} title="Point B" />
+        </MapView>
+     <Timer />
+    </View>
   );
 }
 
