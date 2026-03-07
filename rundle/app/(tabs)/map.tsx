@@ -87,7 +87,7 @@ export default function MapScreen() {
           activeOpacity={1}
           onPress={() => setModalVisible(false)}>
           <View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}>
-            <Text style={styles.sheetTitle}>Tutorial</Text>
+            <Text style={styles.sheetTitle}>Welcome to Binghamton Walkthrough!</Text>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={styles.closeButton}>Close</Text>
             </TouchableOpacity>
