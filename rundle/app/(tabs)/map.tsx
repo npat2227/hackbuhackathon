@@ -38,7 +38,6 @@ export default function MapScreen() {
         return;
       }
 
-      // Start watching location instead of just getting current position once
       subscription = await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
