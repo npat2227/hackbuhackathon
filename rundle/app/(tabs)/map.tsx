@@ -3,19 +3,22 @@ import MapView, { Marker } from 'react-native-maps';
 import React, { useState, useEffect } from 'react';
 import Timer from '../../components/timer'
 
-const POINT_A = {
-  latitude: 37.7749,
-  longitude: -122.4194,
-};
+const COORDINATES = [
+  { latitude: 42.08705862782569, longitude: -75.9670590221643 },
+  { latitude: 42.08764371050289, longitude: -75.97115774377244 },
+  { latitude: 42.08540071965536, longitude: -75.96997456737586 },
+  { latitude: 42.08794396106325, longitude: -75.96331883861443 },
+  { latitude: 42.08767985638451, longitude: -75.96949961121543 },
+];
 
-const POINT_B = {
-  latitude: 37.7849,
-  longitude: -122.4094,
-};
+function getRandomPoints() {
+  const shuffled = [...COORDINATES].sort(() => 0.5 - Math.random());
+  return [shuffled[0], shuffled[1]];
+}
 
-const POINT_PAIRS = {
+const [POINT_A, POINT_B] = getRandomPoints();
 
-};
+
 
 export default function MapScreen() {
   return (
