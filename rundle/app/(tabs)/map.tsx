@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Timer from '../../components/timer';
 
 const POINT_A = {
   latitude: 37.7749,
@@ -34,7 +35,8 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Point A" />
         <Marker coordinate={POINT_B} title="Point B" />
       </MapView>
-
+      <Timer />
+      
       <TouchableOpacity
         style={[styles.fab, { bottom: insets.bottom + 24 }]}
         onPress={() => setModalVisible(true)}>
