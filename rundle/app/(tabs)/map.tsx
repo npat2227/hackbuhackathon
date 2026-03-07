@@ -1,5 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import React, { useState, useEffect } from 'react';
+import Timer from '../../components/timer'
 
 const POINT_A = {
   latitude: 37.7749,
@@ -29,6 +31,7 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Point A" />
         <Marker coordinate={POINT_B} title="Point B" />
       </MapView>
+      <Timer />
     </View>
   );
 }
