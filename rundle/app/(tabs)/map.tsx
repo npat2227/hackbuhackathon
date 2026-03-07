@@ -30,6 +30,7 @@ export default function MapScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
+    let subscription: Location.LocationSubscription | null = null;
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -37,10 +38,23 @@ export default function MapScreen() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      console.log(location.coords.latitude, location.coords.longitude);
+      // Start watching location instead of just getting current position once
+      subscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          distanceInterval: 1, // update every 1 meter
+        },
+        (location) => {
+          setLocation(location);
+        }
+      );
     })();
+
+    return () => {
+      if (subscription) {
+        (subscription as Location.LocationSubscription).remove();
+      }
+    };
   }, []);
 
   return (
@@ -57,7 +71,7 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Start" />
         <Marker coordinate={POINT_B} title="Finish" />
       </MapView>
-    <Timer />
+      <Timer startLocation={POINT_A} userLocation={location?.coords ?? null} />
       <TouchableOpacity
         style={[styles.fab, { bottom: insets.bottom + 24 }]}
         onPress={() => setModalVisible(true)}>
