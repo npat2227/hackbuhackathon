@@ -1,26 +1,27 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import React, { useState, useEffect } from 'react';
 import Timer from '../../components/timer'
 
-const COORDINATES = [
-  { latitude: 42.08705862782569, longitude: -75.9670590221643 },
-  { latitude: 42.08764371050289, longitude: -75.97115774377244 },
-  { latitude: 42.08540071965536, longitude: -75.96997456737586 },
-  { latitude: 42.08794396106325, longitude: -75.96331883861443 },
-  { latitude: 42.08767985638451, longitude: -75.96949961121543 },
-];
+const POINT_A = {
+  latitude: 37.7749,
+  longitude: -122.4194,
+};
 
-function getRandomPoints() {
-  const shuffled = [...COORDINATES].sort(() => 0.5 - Math.random());
-  return [shuffled[0], shuffled[1]];
-}
+const POINT_B = {
+  latitude: 37.7849,
+  longitude: -122.4094,
+};
 
-const [POINT_A, POINT_B] = getRandomPoints();
+const POINT_PAIRS = {
 
-
+};
 
 export default function MapScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const insets = useSafeAreaInsets();
+
   return (
     <View style={styles.container}>
         <MapView
@@ -34,8 +35,8 @@ export default function MapScreen() {
           <Marker coordinate={POINT_A} title="Point A" />
           <Marker coordinate={POINT_B} title="Point B" />
         </MapView>
-     <Timer />
-    </View>
+        <Timer />
+     </View>
   );
 }
 
@@ -45,5 +46,52 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+
+  fab: {
+    position: 'absolute',
+    zIndex: 9,
+    right: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 10,
+  },
+  fabText: {
+    color: '#fff',
+    fontSize: 28,
+    lineHeight: 32,
+  },
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.0)', //use to change backdrop color/opacity
+    justifyContent: 'flex-end', //because it looks butt ugly on android
+  },
+  sheet: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: 24,
+  },
+  sheetTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
+  },
+  sheetText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 16,
+  },
+  closeButton: {
+    color: '#007AFF',
+    fontSize: 16,
   },
 });
