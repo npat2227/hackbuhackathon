@@ -31,8 +31,8 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Point A" />
         <Marker coordinate={POINT_B} title="Point B" />
       </MapView>
-      <Timer />
-    </View>
+  <Timer />
+  </View>
   );
 }
 
