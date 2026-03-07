@@ -11,6 +11,10 @@ const POINT_B = {
   longitude: -122.4094,
 };
 
+const POINT_PAIRS = {
+
+};
+
 export default function MapScreen() {
   return (
     <View style={styles.container}>
