@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import * as Location from 'expo-location';
 
 export default function Timer() {
   const [seconds, setSeconds] = useState(0);

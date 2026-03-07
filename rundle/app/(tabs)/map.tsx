@@ -54,8 +54,8 @@ export default function MapScreen() {
           latitudeDelta: 0.02,
           longitudeDelta: 0.02,
         }}>
-        <Marker coordinate={POINT_A} title="Point A" />
-        <Marker coordinate={POINT_B} title="Point B" />
+        <Marker coordinate={POINT_A} title="Start" />
+        <Marker coordinate={POINT_B} title="Finish" />
       </MapView>
     <Timer />
       <TouchableOpacity
