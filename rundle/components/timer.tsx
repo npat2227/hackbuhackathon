@@ -106,18 +106,12 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
       setSeconds(0);
       setRunning(false);
     } else {
-      setRunning(true);
       updateDistance();
       setSeconds(0);
       setCountdown(3);
     }
   };
-while(running){
-  if( distanceCurrent <= DISTANCE_THRESHOLD){
-    //connect to leaderboard
-    setRunning(false);
-  }
-}
+
   const formatTime = (sec: any) => {
     const minutes = Math.floor(sec / 60);
     const secondsLeft = sec % 60;
