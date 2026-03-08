@@ -31,6 +31,8 @@ export default function Timer({
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [showGo, setShowGo] = useState(false);
 
   // Distance from user to start / finish (Infinity when location unavailable)
   const distanceToStart = userLocation
@@ -60,6 +62,26 @@ export default function Timer({
     return () => clearInterval(interval);
   }, [running]);
 
+    //3,2,1 go countdown before timer starts
+    useEffect(() => {
+  if (countdown === null) return;
+
+  if (countdown > 0) {
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    return () => clearTimeout(timer);
+  }
+
+  if (countdown === 0) {
+    setShowGo(true);
+
+    setTimeout(() => {
+      setShowGo(false);
+      setCountdown(null);
+      setRunning(true);
+    }, 1000);
+  }
+  }, [countdown]);
+
   // Auto-stop and fire onFinish when user reaches the finish point
   useEffect(() => {
     if (running && distanceToEnd <= DISTANCE_THRESHOLD) {
@@ -76,7 +98,9 @@ export default function Timer({
       setRunning(false);
       setFinished(false);
     } else if (!finished) {
-      setRunning(true);
+      //set countdown, then start timer
+      setSeconds(0);
+      setCountdown(3);
     }
   };
 
@@ -89,6 +113,14 @@ export default function Timer({
   };
 
   return (
+    <>
+    {countdown !== null && (
+    <View style={timerStyles.countdownOverlay}>
+      <Text style={timerStyles.countdownBig}>
+        {showGo ? "GO!" : countdown}
+    </Text>
+  </View>
+)}
     <View style={timerStyles.timerContainer}>
       <View>
         <Text style={timerStyles.timerText}>{formatTime(seconds)}</Text>
@@ -104,10 +136,12 @@ export default function Timer({
           title={running ? "Reset Timer" : "Start Timer"}
           onPress={handleButtonPress}
           disabled={!running && !isNearStart}
+          //comment out the line above if you want to start timer no matter location
         />
       )}
       {finished && <Text style={timerStyles.finishedText}>Finished!</Text>}
     </View>
+    </>
   );
 }
 
@@ -132,6 +166,20 @@ const timerStyles = StyleSheet.create({
     color: "#ff4444",
     fontSize: 12,
     fontWeight: "600",
+  },
+  countdownOverlay: {
+  position: 'absolute',
+  top: '45%',
+  alignSelf: 'center',
+  zIndex: 20,
+  },
+  countdownBig: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 6,
   },
   finishedText: {
     color: "#00cc66",
