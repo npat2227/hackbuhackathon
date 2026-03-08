@@ -4,6 +4,8 @@ import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Timer from '../../components/timer';
+import { Link } from 'expo-router';
+import {ThemedText} from "@/components/themed-text";
 
 
 const COORDINATES = [
@@ -24,6 +26,7 @@ const [POINT_A, POINT_B] = getRandomPoints();
 
 
 export default function MapScreen() {
+
   const [modalVisible, setModalVisible] = useState(false);
   const insets = useSafeAreaInsets();
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
