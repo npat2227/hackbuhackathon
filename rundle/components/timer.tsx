@@ -30,6 +30,8 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
 export default function Timer({ startLocation, endLocation, userLocation }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [showGo, setShowGo] = useState(false);
 
   const distanceStart = userLocation
     ? getDistance(
@@ -62,16 +64,37 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
     };
   }, [running]);
 
+  useEffect(() => {
+  if (countdown === null) return;
+
+  if (countdown > 0) {
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    return () => clearTimeout(timer);
+  }
+
+  if (countdown === 0) {
+    setShowGo(true);
+
+    setTimeout(() => {
+      setShowGo(false);
+      setCountdown(null);
+      setRunning(true);
+    }, 1000);
+  }
+  }, [countdown]);
+
   function updateDistance() {
     distanceCurrent = distanceEnd
   }
   const handleButtonPress = () => {
-    if (running ) {
+    if (running) {
       setSeconds(0);
       setRunning(false);
     } else {
       setRunning(true);
       updateDistance();
+      setSeconds(0);
+      setCountdown(3);
     }
   };
 while(running){
@@ -86,6 +109,14 @@ while(running){
     return `${minutes.toString().padStart(2,'0')}:${secondsLeft.toString().padStart(2,'0')}`;
   };
   return (
+    <>
+    {countdown !== null && (
+    <View style={timerStyles.countdownOverlay}>
+      <Text style={timerStyles.countdownBig}>
+        {showGo ? "GO!" : countdown}
+    </Text>
+  </View>
+)}
     <View style={timerStyles.timerContainer}>
       <View>
         <Text style={timerStyles.timerText}>{formatTime(seconds)}</Text>
@@ -101,6 +132,7 @@ while(running){
         disabled={!running && !isNearStart}
       />
     </View>
+    </>
   );
 }
 
@@ -127,5 +159,19 @@ const timerStyles = StyleSheet.create({
     color: '#ff4444',
     fontSize: 12,
     fontWeight: '600',
+  },
+  countdownOverlay: {
+  position: 'absolute',
+  top: '45%',
+  alignSelf: 'center',
+  zIndex: 20,
+  },
+  countdownBig: {
+    fontSize: 80,
+    fontWeight: 'bold',
+    color: '#fff',
+    textShadowColor: '#000',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 6,
   },
 });
