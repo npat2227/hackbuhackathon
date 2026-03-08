@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
+import {time} from "@expo/fingerprint/cli/build/utils/log";
 
 
 interface TimerProps {
@@ -65,7 +66,7 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
     distanceCurrent = distanceEnd
   }
   const handleButtonPress = () => {
-    if (running) {
+    if (running ) {
       setSeconds(0);
       setRunning(false);
     } else {
@@ -73,13 +74,17 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
       updateDistance();
     }
   };
-
+while(running){
+  if( distanceCurrent <= DISTANCE_THRESHOLD){
+    //connect to leaderboard
+    setRunning(false);
+  }
+}
   const formatTime = (sec: any) => {
     const minutes = Math.floor(sec / 60);
     const secondsLeft = sec % 60;
     return `${minutes.toString().padStart(2,'0')}:${secondsLeft.toString().padStart(2,'0')}`;
   };
-
   return (
     <View style={timerStyles.timerContainer}>
       <View>

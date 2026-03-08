@@ -14,6 +14,8 @@ const COORDINATES = [
   { latitude: 42.08540071965536, longitude: -75.96997456737586 },
   { latitude: 42.08794396106325, longitude: -75.96331883861443 },
   { latitude: 42.08767985638451, longitude: -75.96949961121543 },
+
+
 ];
 
 function getRandomPoints() {
@@ -93,7 +95,7 @@ export default function MapScreen() {
             <Text style={styles.sheetTitle}>Welcome to Binghamton Walkthrough!</Text>
             <Text style={styles.sheetText}>Binghamton Walkthrough is like Wordle, but for racing.
               Every day, a race track will be randomly selected. Go to point A, press start,
-              and get to point B as fast as you can! If you're fast enough, you might make it on the leaderboard of the fastest racers.
+              and get to point B as fast as you can! If you&#39;re fast enough, you might make it on the leaderboard of the fastest racers.
             </Text>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={styles.closeButton}>Close</Text>
