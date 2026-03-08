@@ -70,7 +70,7 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Start" />
         <Marker coordinate={POINT_B} title="Finish" />
       </MapView>
-      <Timer startLocation={POINT_A} userLocation={location?.coords ?? null} />
+      <Timer startLocation={POINT_A} endLocation={POINT_B} userLocation={location?.coords ?? null} />
       <TouchableOpacity
         style={[styles.fab, { bottom: insets.bottom + 24 }]}
         onPress={() => setModalVisible(true)}>

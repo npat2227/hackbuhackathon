@@ -6,6 +6,7 @@ import * as Location from 'expo-location';
 interface TimerProps {
   startLocation: { latitude: number; longitude: number };
   userLocation: { latitude: number; longitude: number } | null;
+  endLocation: { latitude: number; longitude: number };
 }
 
 const DISTANCE_THRESHOLD = 50; // Distance in meters
@@ -25,11 +26,11 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return R * c; // in metres
 }
 
-export default function Timer({ startLocation, userLocation }: TimerProps) {
+export default function Timer({ startLocation, endLocation, userLocation }: TimerProps) {
   const [seconds, setSeconds] = useState(0);
   const [running, setRunning] = useState(false);
 
-  const distance = userLocation
+  const distanceStart = userLocation
     ? getDistance(
         userLocation.latitude,
         userLocation.longitude,
@@ -37,8 +38,18 @@ export default function Timer({ startLocation, userLocation }: TimerProps) {
         startLocation.longitude
       )
     : Infinity;
+  let distanceCurrent = distanceStart
+  const distanceEnd = userLocation
+      ? getDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          endLocation.latitude,
+          endLocation.longitude
+      )
+      : Infinity;
 
-  const isNearStart = distance <= DISTANCE_THRESHOLD;
+
+  const isNearStart = distanceStart <= DISTANCE_THRESHOLD;
 
   useEffect(() => {
     let interval: any;
@@ -50,12 +61,16 @@ export default function Timer({ startLocation, userLocation }: TimerProps) {
     };
   }, [running]);
 
+  function updateDistance() {
+    distanceCurrent = distanceEnd
+  }
   const handleButtonPress = () => {
     if (running) {
       setSeconds(0);
       setRunning(false);
     } else {
       setRunning(true);
+      updateDistance();
     }
   };
 
@@ -71,7 +86,7 @@ export default function Timer({ startLocation, userLocation }: TimerProps) {
         <Text style={timerStyles.timerText}>{formatTime(seconds)}</Text>
         {!running && !isNearStart && userLocation && (
           <Text style={timerStyles.distanceText}>
-            {distance.toFixed(0)}m away
+            {distanceCurrent.toFixed(0)}m away
           </Text>
         )}
       </View>
@@ -83,6 +98,8 @@ export default function Timer({ startLocation, userLocation }: TimerProps) {
     </View>
   );
 }
+
+
 
 const timerStyles = StyleSheet.create({
   timerContainer: {
