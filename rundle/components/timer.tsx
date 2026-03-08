@@ -56,14 +56,29 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
     let interval: any;
     if (running) {
       interval = setInterval(() => setSeconds(prev => prev + 1), 1000);
+      updateDistance();
     }
     return () => {
       if (interval) clearInterval(interval);
     };
   }, [running]);
 
+  // Check if user reached the end location
+  useEffect(() => {
+    if (running && distanceEnd <= DISTANCE_THRESHOLD) {
+      //connect to leaderboard
+      setRunning(false);
+    }
+  }, [running, distanceEnd]);
+
   function updateDistance() {
-    distanceCurrent = distanceEnd
+    if(distanceCurrent == distanceStart)
+    {
+      distanceCurrent = distanceStart;
+    }
+    else{
+      distanceCurrent = distanceEnd;
+    }
   }
   const handleButtonPress = () => {
     if (running ) {
@@ -74,12 +89,6 @@ export default function Timer({ startLocation, endLocation, userLocation }: Time
       updateDistance();
     }
   };
-while(running){
-  if( distanceCurrent <= DISTANCE_THRESHOLD){
-    //connect to leaderboard
-    setRunning(false);
-  }
-}
   const formatTime = (sec: any) => {
     const minutes = Math.floor(sec / 60);
     const secondsLeft = sec % 60;
