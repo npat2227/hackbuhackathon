@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LeaderboardScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Today's Leaderboard</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Text style={{ color: 'red', fontSize: 32 }}>TODAY'S LEADERBOARD</Text>
+    </SafeAreaView>
   );
 }
 
