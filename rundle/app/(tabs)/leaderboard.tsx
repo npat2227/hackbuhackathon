@@ -1,17 +1,14 @@
-// ─── Imports ──────────────────────────────────────────────────────────────────
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 interface LeaderboardEntry {
   nickname: string;
   seconds: number;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 const MEDAL = ["🥇", "🥈", "🥉"];
 
 function formatTime(sec: number) {
@@ -22,7 +19,6 @@ function formatTime(sec: number) {
   return `${m}:${s}`;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function LeaderboardScreen() {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
 
@@ -47,8 +43,7 @@ export default function LeaderboardScreen() {
     year: "numeric",
   });
 
-  // ─── Render ───────────────────────────────────────────────────────────────
-  return (
+    return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
@@ -65,7 +60,7 @@ export default function LeaderboardScreen() {
           </Text>
         </View>
       ) : (
-        /* Entry list — sorted fastest to slowest */
+        // Entry list — sorted fastest to slowest
         <FlatList
           data={entries}
           keyExtractor={(_, i) => String(i)}

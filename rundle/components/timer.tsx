@@ -1,8 +1,6 @@
-// ─── Imports ──────────────────────────────────────────────────────────────────
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 interface TimerProps {
   startLocation: { latitude: number; longitude: number };
   endLocation: { latitude: number; longitude: number };
@@ -11,10 +9,8 @@ interface TimerProps {
   onFinish?: (seconds: number) => void;
 }
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-const DISTANCE_THRESHOLD = 50; // metres — how close counts as "arrived"
+const DISTANCE_THRESHOLD = 25; // metres — how close counts as "arrived"
 
-// ─── Haversine distance helper ────────────────────────────────────────────────
 function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371e3;
   const φ1 = (lat1 * Math.PI) / 180;
@@ -26,7 +22,6 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); // metres
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function Timer({
   startLocation,
   endLocation,
@@ -46,6 +41,7 @@ export default function Timer({
         startLocation.longitude,
       )
     : Infinity;
+
   const distanceToEnd = userLocation
     ? getDistance(
         userLocation.latitude,
@@ -92,7 +88,6 @@ export default function Timer({
     return `${m}:${s}`;
   };
 
-  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <View style={timerStyles.timerContainer}>
       <View>

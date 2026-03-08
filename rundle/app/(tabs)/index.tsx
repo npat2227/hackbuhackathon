@@ -1,4 +1,3 @@
-// ─── Imports ──────────────────────────────────────────────────────────────────
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
@@ -14,7 +13,6 @@ import MapView, { Marker } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Timer from "../../components/timer";
 
-// ─── Constants ───────────────────────────────────────────────────────────────
 const COORDINATES = [
   { latitude: 42.08705862782569, longitude: -75.9670590221643 },
   { latitude: 42.08764371050289, longitude: -75.97115774377244 },
@@ -30,9 +28,8 @@ function getRandomPoints() {
 
 const [POINT_A, POINT_B] = getRandomPoints();
 
-// ─── Component ───────────────────────────────────────────────────────────────
 export default function MapScreen() {
-  // --- State ---
+  //location of user
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null,
   );
@@ -41,8 +38,6 @@ export default function MapScreen() {
   const [nickname, setNickname] = useState("");
   const [finishedSeconds, setFinishedSeconds] = useState<number | null>(null);
   const insets = useSafeAreaInsets();
-
-  // --- Leaderboard handlers ---
 
   // Called by Timer when user reaches the finish point
   const handleFinish = (seconds: number) => {
@@ -71,8 +66,7 @@ export default function MapScreen() {
     setNicknameModalVisible(false);
   };
 
-  // --- Location tracking ---
-  useEffect(() => {
+    useEffect(() => {
     let subscription: Location.LocationSubscription | null = null;
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -87,7 +81,7 @@ export default function MapScreen() {
     };
   }, []);
 
-  // ─── Render ─────────────────────────────────────────────────────────────────
+  //make map 
   return (
     <View style={styles.container}>
       {/* Map with Start / Finish markers */}
@@ -104,7 +98,7 @@ export default function MapScreen() {
         <Marker coordinate={POINT_A} title="Start" />
         <Marker coordinate={POINT_B} title="Finish" />
       </MapView>
-      {/* Timer overlay — calls onFinish when user reaches POINT_B */}
+      {/* Timer overlay calls onFinish when user reaches POINT_B */}
       <Timer
         startLocation={POINT_A}
         endLocation={POINT_B}
@@ -120,7 +114,6 @@ export default function MapScreen() {
         <Text style={styles.fabText}>?</Text>
       </TouchableOpacity>
 
-      {/* ── Info Modal ── */}
       <Modal
         visible={infoModalVisible}
         transparent={true}
@@ -150,7 +143,7 @@ export default function MapScreen() {
         </TouchableOpacity>
       </Modal>
 
-      {/* ── Nickname Modal (shown automatically after finishing the route) ── */}
+      {/*Ask for nickname after finishing race to show on leaderboard */}
       <Modal
         visible={nicknameModalVisible}
         transparent={true}
@@ -192,7 +185,6 @@ export default function MapScreen() {
   );
 }
 
-// ─── Styles ───────────────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   // Layout
   container: { flex: 1 },
