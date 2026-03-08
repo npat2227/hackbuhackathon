@@ -135,7 +135,7 @@ export default function Timer({
         <Button
           title={running ? "Reset Timer" : "Start Timer"}
           onPress={handleButtonPress}
-          disabled={!running && !isNearStart}
+          //disabled={!running && !isNearStart}
           //comment out the line above if you want to start timer no matter location
         />
       )}
