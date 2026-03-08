@@ -87,7 +87,11 @@ export default function MapScreen() {
           activeOpacity={1}
           onPress={() => setModalVisible(false)}>
           <View style={[styles.sheet, { paddingBottom: insets.bottom + 16 }]}>
-            <Text style={styles.sheetTitle}>Tutorial</Text>
+            <Text style={styles.sheetTitle}>Welcome to Binghamton Walkthrough!</Text>
+            <Text style={styles.sheetText}>Binghamton Walkthrough is like Wordle, but for racing.
+              Every day, a race track will be randomly selected. Go to point A, press start,
+              and get to point B as fast as you can! If you're fast enough, you might make it on the leaderboard of the fastest racers.
+            </Text>
             <TouchableOpacity onPress={() => setModalVisible(false)}>
               <Text style={styles.closeButton}>Close</Text>
             </TouchableOpacity>
@@ -143,8 +147,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sheetText: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '400',
     marginBottom: 16,
   },
   closeButton: {
