@@ -1,6 +1,4 @@
-hackbu hackathon submission
-
-Binghamton walkthrough: 
+Binghamton Rundle: 
 Pokemon Go meets wordle in this action-packed adventure through campus!
 
-Your go for m point a to point b every day
+Check our Devpost for more details: https://devpost.com/software/binghamton-walkthrough
